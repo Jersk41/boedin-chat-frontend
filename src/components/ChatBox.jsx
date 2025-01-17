@@ -1,6 +1,6 @@
-import {useState, useEffect} from 'react';
-import DummyChat from './DummyChat';
-import DummyChatSelf from './DummyChatSelf';
+import { useState, useEffect } from "react";
+import DummyChat from "./DummyChat";
+import DummyChatSelf from "./DummyChatSelf";
 
 const ChatBox = () => {
     return (
@@ -17,7 +17,7 @@ const ChatBox = () => {
                     </div>
                 </div>
 
-                <div className="max-w-full flex-1 bg-white overflow-y-auto space-y-4 pr-6 pt-6">
+                <div className="max-w-full flex-1 bg-white overflow-y-auto overflow-x-hidden space-y-4 pr-6 pt-6">
                     <DummyChat user="IMPHNEN" msg="Hai, Saya Imphnen, Apa Kabar?" />
                     <DummyChatSelf user="Fathin" msg="Mahiru Istri Saya" />
                     <DummyChat user="IMPHNEN" msg="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, excepturi. lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, excepturi. lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, excepturi." />
@@ -25,7 +25,7 @@ const ChatBox = () => {
                 <div className="w-full h-20 bg-secondary"></div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default ChatBox
+export default ChatBox;
