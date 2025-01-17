@@ -6,9 +6,12 @@ export default {
   ],
   theme: {
     colors: {
-            'primary': '#1CBBBC',
-            'secondary': '#17AFB0',
-            'white': '#FDFAFA',
+            'text': '#e8e9f2',
+            'background': "#0f0f14",
+            'primary': '#c1c5ff',
+            'secondary': '#bfcfe7',
+            'accent': '#ff7e8a',
+            'white': '#fdfafa'
     },
     extend: {},
   },

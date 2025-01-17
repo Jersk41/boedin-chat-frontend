@@ -8,7 +8,7 @@ import ChatBox from './components/ChatBox'
 
 export default function App() {
   return (
-    <div className="w-full h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex bg-background items-center justify-center">
             <ChatBox />
     </div>
   )
