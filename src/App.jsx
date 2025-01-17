@@ -1,37 +1,18 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import { Button } from "./components/ui/button";
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import ChatBox from './components/ChatBox'
 
 function App() {
   const [count, setCount] = useState(0);
 
+
+export default function App() {
   return (
-    <>
-      <div className="flex justify-center space-x-4 text-black">
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <Button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
-        <p className="text-green-500">Shadcn installed and configured</p>
-        <p className="text-blue-500">
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+    <div className="w-full h-screen flex bg-background items-center justify-center">
+            <ChatBox />
+    </div>
+  )
 }
 
 export default App;
