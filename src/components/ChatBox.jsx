@@ -71,10 +71,12 @@ const ChatBox = () => {
 
     useEffect(() => {
         if (chatContainer.current) {
-            chatContainer.current.scrollTo({
-                top: chatContainer.current.scrollHeight,
-                behavior: "smooth",
-            });
+            setTimeout(() => {
+                chatContainer.current.scrollTo({
+                    top: chatContainer.current.scrollHeight,
+                    behavior: "smooth",
+                });
+            }, 1);
         }
     }, [messages]);
 
@@ -100,8 +102,9 @@ const ChatBox = () => {
                     </div>
                 </div>
 
-                <div ref={chatContainer} className="max-w-full flex-1 bg-white overflow-y-auto overflow-x-hidden space-y-4 pr-6 py-6">
+                <div ref={chatContainer} className="max-w-full flex-1 bg-white overflow-y-scroll overflow-x-hidden space-y-4 pr-6 py-6">
                     {/* DISINI TEMPAT UNTUK MELAKUKAN CHAT, WEB SOCKET HARUS TERHUBUNG KE SINI */}
+
                     {messages.map((message) => {
                         return message.usr === currentUser ? <DummyChatSelf user={currentUser} msg={message.msg} /> : <DummyChat user={message.usr} msg={message.msg} />;
                     })}
