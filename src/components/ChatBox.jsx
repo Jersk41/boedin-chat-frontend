@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DummyChat from "./DummyChat";
 import DummyChatSelf from "./DummyChatSelf";
 import { Textarea } from "./ui/textarea";
@@ -13,8 +13,10 @@ const ChatBox = () => {
     const [messages, setMessages] = useState([]);
     const currentUser = nameStore;
     const [inputMessage, setInputMessage] = useState("");
+    const [socket, setSocket] = useState(null);
+
     const handleSendButton = () => {
-        console.log("Pesan ada di component chat input", inputMessage);
+        // console.log("Pesan ada di component chat input", inputMessage);
         setMessages((prev) => [
             ...prev,
             {
@@ -24,6 +26,57 @@ const ChatBox = () => {
         ]);
         setInputMessage("");
     };
+
+    /*
+        Kode di bawah bersifat sementara,
+        akan digunakan kembali jika websocket
+        tidak bermasalah!
+    */
+
+    // const handleSendButton = () => {
+    //     if (!socket) return;
+
+    //     const messageData = {
+    //         usr: currentUser,
+    //         msg: inputMessage,
+    //     };
+
+    //     socket.send(JSON.stringify(messageData));
+    //     setInputMessage("");
+    // };
+
+    // useEffect(() => {
+    //     if (!currentUser) return;
+
+    //     const ws = new WebSocket("wss://budin.azumidev.web.id");
+    //     setSocket(ws);
+
+    //     ws.onopen = () => console.log("WebSocket connected");
+    //     ws.onclose = () => console.log("WebSocket disconnected");
+    //     ws.onerror = (error) => console.error("WebSocket error:", error);
+
+    //     ws.onmessage = (event) => {
+    //         const incomingMessage = JSON.parse(event.data);
+    //         setMessages((prev) => [...prev, incomingMessage]);
+    //     };
+
+    //     return () => ws.close();
+    // }, [currentUser]);
+
+    /* 
+        End of websocket code.
+    */
+
+    const chatContainer = useRef();
+
+    useEffect(() => {
+        if (chatContainer.current) {
+            chatContainer.current.scrollTo({
+                top: chatContainer.current.scrollHeight,
+                behavior: "smooth",
+            });
+        }
+    }, [messages]);
 
     useEffect(() => {
         if (nameStore) {
@@ -47,7 +100,8 @@ const ChatBox = () => {
                     </div>
                 </div>
 
-                <div className="max-w-full flex-1 bg-white overflow-y-auto overflow-x-hidden space-y-4 pr-6 py-6">
+                <div ref={chatContainer} className="max-w-full flex-1 bg-white overflow-y-auto overflow-x-hidden space-y-4 pr-6 py-6">
+                    {/* DISINI TEMPAT UNTUK MELAKUKAN CHAT, WEB SOCKET HARUS TERHUBUNG KE SINI */}
                     {messages.map((message) => {
                         return message.usr === currentUser ? <DummyChatSelf user={currentUser} msg={message.msg} /> : <DummyChat user={message.usr} msg={message.msg} />;
                     })}

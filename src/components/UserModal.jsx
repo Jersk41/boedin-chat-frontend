@@ -22,15 +22,18 @@ export default function Usermodal() {
     const handleName = (e) => {
         e.preventDefault();
         addNameStore(name);
-        if (nameStore) {
+    };
+
+    useEffect(() => {
+        if (!nameStore) {
+            setOpen(true);
+        } else {
             setOpen(false);
             setTimeout(() => {
                 container.current.style.display = "none";
             }, 500);
-        } else {
-            setOpen(true);
         }
-    };
+    }, [nameStore]);
     return (
         <div ref={container} className={`absolute ease-in-out inset-0 flex items-center justify-center`}>
             <div className={`absolute inset-0 transition-all ${open ? "opacity-100 bg-background bg-opacity-50  backdrop-blur-md" : "opacity-0"}`}></div>
@@ -54,14 +57,12 @@ export default function Usermodal() {
                                 placeholder="Fathin"
                                 className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive border-white text-white"
                                 onChange={(e) => setName(e.target.value)}
-                                // disabled={pending}
                                 aria-errormessage="error-name"
                             />
                         </div>
                     </CardContent>
                     <CardFooter>
                         <Button type="submit" size="sm" disabled={false} onClick={handleName}>
-                            {/* {pending ? "Sending..." : "Send Message"} */}
                             Submit sekarang!
                         </Button>
                     </CardFooter>
