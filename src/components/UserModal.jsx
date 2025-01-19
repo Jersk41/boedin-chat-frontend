@@ -11,33 +11,46 @@ import { cn } from "@/lib/utils";
 // import { contactFormAction } from '@/lib/actions'
 import { Check } from "lucide-react";
 
-export default function Usermodal() {
+export default function UserModal() {
     const container = useRef(null);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [name, setName] = useState("");
 
     const nameStore = useDataStore((state) => state.name);
     const addNameStore = useDataStore((state) => state.setName);
+    const localName = localStorage.getItem("name");
 
     const handleName = (e) => {
         e.preventDefault();
+        localStorage.setItem("name", name);
         addNameStore(name);
     };
 
+    const disableModal = () => {
+        setOpen(true);
+        setTimeout(() => {
+            container.current.style.display = "none";
+        }, 500);
+    };
+
     useEffect(() => {
-        if (!nameStore) {
-            setOpen(true);
+        container.current.classList.replace("flex", "hidden");
+        if (localName) {
+            container.current.remove();
+            addNameStore(localName);
         } else {
-            setOpen(false);
-            setTimeout(() => {
-                container.current.style.display = "none";
-            }, 500);
+            container.current.classList.replace("hidden", "flex");
+            if (!nameStore) {
+                setOpen(false);
+            } else {
+                disableModal();
+            }
         }
-    }, [nameStore]);
+    }, [localName]);
     return (
-        <div ref={container} className={`absolute ease-in-out inset-0 flex items-center justify-center`}>
-            <div className={`absolute inset-0 transition-all ${open ? "opacity-100 bg-background bg-opacity-50  backdrop-blur-md" : "opacity-0"}`}></div>
-            <Card className={cn("relative z-10 w-full max-w-md bg-background transition-all ease-in-out", open ? "opacity-100 scale-100" : "opacity-0 scale-0")}>
+        <div ref={container} className={`user-modal absolute ease-in-out inset-0 flex items-center justify-center`}>
+            <div className={`absolute inset-0 transition-all ${open ? "opacity-0" : "opacity-100 bg-background bg-opacity-50  backdrop-blur-md"}`}></div>
+            <Card className={cn("relative z-10 w-full max-w-md bg-background transition-all ease-in-out", open ? "opacity-0 scale-0" : "opacity-100 scale-100")}>
                 <CardHeader>
                     <CardTitle className="text-white">Selamat datang di Boedin chat!</CardTitle>
                     <CardDescription className="text-white">Boleh tau nama Anda siapa?</CardDescription>

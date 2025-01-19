@@ -5,6 +5,7 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import useDataStore from "@/store/Store";
+import Hamburger from "./Hamburger";
 
 const ChatBox = () => {
     const [openInput, setOpenInput] = useState(false);
@@ -92,14 +93,17 @@ const ChatBox = () => {
         <div className="container h-[80vh] px-4 md:px-0 bg-background flex flex-col md:flex-row rounded-xl overflow-hidden gap-6">
             <div className="flex-[1] bg-secondary border-primary border-4 rounded-xl overflow-hidden"></div>
             <div className="flex-[3] flex flex-col bg-secondary text-black overflow-hidden rounded-xl border-4 border-primary">
-                <div className="w-full h-20 bg-secondary flex items-center px-7 gap-4">
-                    <div className="w-[50px] h-[50px] bg-yellow-500 rounded-full overflow-hidden">
-                        <img src="/fp-square.jpeg" alt="" />
+                <div className="w-full h-20 bg-secondary flex items-center justify-between px-7 gap-4">
+                    <div className="flex items-center gap-4">
+                        <div className="w-[50px] h-[50px] bg-yellow-500 rounded-full overflow-hidden">
+                            <img src="/fp-square.jpeg" alt="" />
+                        </div>
+                        <div>
+                            <h1 className="font-bold uppercase">IMPHNEN</h1>
+                            <p className="font-normal">Ingin Menjadi Programmer Handal, Namun Enggan Ngoding</p>
+                        </div>
                     </div>
-                    <div>
-                        <h1 className="font-bold uppercase">IMPHNEN</h1>
-                        <p className="font-normal">Ingin Menjadi Programmer Handal, Namun Enggan Ngoding</p>
-                    </div>
+                    <Hamburger />
                 </div>
 
                 <div ref={chatContainer} className="max-w-full flex-1 bg-white overflow-y-scroll overflow-x-hidden space-y-4 pr-6 py-6">
