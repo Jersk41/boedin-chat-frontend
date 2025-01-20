@@ -78,8 +78,8 @@ const ChatBox = () => {
                 ])
             );
 
-            console.log(incomingMessage);
-            console.log(messages);
+            // console.log(incomingMessage);
+            // console.log(messages);
         };
 
         return () => ws.close();
