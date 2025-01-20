@@ -24,33 +24,21 @@ export default function UserModal() {
         e.preventDefault();
         localStorage.setItem("name", name);
         addNameStore(name);
-    };
-
-    const disableModal = () => {
-        setOpen(true);
-        setTimeout(() => {
-            container.current.style.display = "none";
-        }, 500);
+        setOpen(false);
     };
 
     useEffect(() => {
-        container.current.classList.replace("flex", "hidden");
         if (localName) {
-            container.current.remove();
             addNameStore(localName);
         } else {
-            container.current.classList.replace("hidden", "flex");
-            if (!nameStore) {
-                setOpen(false);
-            } else {
-                disableModal();
-            }
+            setOpen(true);
         }
-    }, [localName]);
+    }, [localName, addNameStore]);
+
     return (
-        <div ref={container} className={`user-modal absolute ease-in-out inset-0 flex items-center justify-center`}>
-            <div className={`absolute inset-0 transition-all ${open ? "opacity-0" : "opacity-100 bg-background bg-opacity-50  backdrop-blur-md"}`}></div>
-            <Card className={cn("relative z-10 w-full max-w-md bg-background transition-all ease-in-out", open ? "opacity-0 scale-0" : "opacity-100 scale-100")}>
+        <div ref={container} className={`user-modal absolute inset-0 flex items-center justify-center transition-all ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+            <div className={`absolute inset-0 bg-background bg-opacity-50 backdrop-blur-md transition-all ${open ? "opacity-100" : "opacity-0"}`}></div>
+            <Card className={cn("relative z-10 w-full max-w-md bg-background transition-all", open ? "opacity-100 scale-100" : "opacity-0 scale-0")}>
                 <CardHeader>
                     <CardTitle className="text-white">Selamat datang di Boedin chat!</CardTitle>
                     <CardDescription className="text-white">Boleh tau nama Anda siapa?</CardDescription>
@@ -58,24 +46,17 @@ export default function UserModal() {
                 <form>
                     <CardContent className="flex flex-col gap-6">
                         <div className="group/field grid gap-2">
-                            <Label htmlFor="name" className="group-data-[invalid=true]/field:text-destructive text-white">
+                            <Label htmlFor="name" className="text-white">
                                 Nama{" "}
                                 <span aria-hidden="true" className="text-destructive">
                                     *
                                 </span>
                             </Label>
-                            <Input
-                                id="name"
-                                name="name"
-                                placeholder="Fathin"
-                                className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive border-white text-white"
-                                onChange={(e) => setName(e.target.value)}
-                                aria-errormessage="error-name"
-                            />
+                            <Input id="name" name="name" placeholder="Fathin" className="border-white text-white" onChange={(e) => setName(e.target.value)} value={name} aria-errormessage="error-name" />
                         </div>
                     </CardContent>
                     <CardFooter>
-                        <Button type="submit" size="sm" disabled={false} onClick={handleName}>
+                        <Button type="submit" size="sm" disabled={!name} onClick={handleName}>
                             Submit sekarang!
                         </Button>
                     </CardFooter>
