@@ -36,9 +36,9 @@ export default function UserModal() {
     }, [localName, addNameStore]);
 
     return (
-        <div ref={container} className={`user-modal absolute inset-0 flex items-center justify-center transition-all ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-            <div className={`absolute inset-0 bg-background bg-opacity-50 backdrop-blur-md transition-all ${open ? "opacity-100" : "opacity-0"}`}></div>
-            <Card className={cn("relative z-10 w-full max-w-md bg-background transition-all", open ? "opacity-100 scale-100" : "opacity-0 scale-0")}>
+        <div ref={container} className={`user-modal absolute inset-0 flex items-center justify-center transition-all ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+            <div className={`absolute inset-0 bg-background bg-opacity-50 backdrop-blur-md transition-all ${open ? 'opacity-100' : 'opacity-0'}`}></div>
+            <Card className={cn("relative z-10 w-full max-w-md bg-background transition-all", open ? 'opacity-100 scale-100' : 'opacity-0 scale-0')}>
                 <CardHeader>
                     <CardTitle className="text-white">Selamat datang di Boedin chat!</CardTitle>
                     <CardDescription className="text-white">Boleh tau nama Anda siapa?</CardDescription>
@@ -48,11 +48,17 @@ export default function UserModal() {
                         <div className="group/field grid gap-2">
                             <Label htmlFor="name" className="text-white">
                                 Nama{" "}
-                                <span aria-hidden="true" className="text-destructive">
-                                    *
-                                </span>
+                                <span aria-hidden="true" className="text-destructive">*</span>
                             </Label>
-                            <Input id="name" name="name" placeholder="Fathin" className="border-white text-white" onChange={(e) => setName(e.target.value)} value={name} aria-errormessage="error-name" />
+                            <Input
+                                id="name"
+                                name="name"
+                                placeholder="Fathin"
+                                className="border-white text-white"
+                                onChange={(e) => setName(e.target.value)}
+                                value={name}
+                                aria-errormessage="error-name"
+                            />
                         </div>
                     </CardContent>
                     <CardFooter>
