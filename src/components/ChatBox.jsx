@@ -51,6 +51,17 @@ const ChatBox = () => {
         socket.send(JSON.stringify([messageData]));
         setInputMessage("");
     };
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            if (e.shiftKey) {
+                return;
+            }
+            e.preventDefault();
+            if (inputMessage.trim()) {
+                handleSendButton();
+            }
+        }
+    };
 
     useEffect(() => {
         if (!currentUser) return;
@@ -118,17 +129,35 @@ const ChatBox = () => {
                         </div>
                         <div>
                             <h1 className="font-bold uppercase">IMPHNEN</h1>
-                            <p className="font-normal">Ingin Menjadi Programmer Handal, Namun Enggan Ngoding</p>
+                            <p className="font-normal">
+                                Ingin Menjadi Programmer Handal, Namun Enggan
+                                Ngoding
+                            </p>
                         </div>
                     </div>
                     <Hamburger />
                 </div>
 
-                <div ref={chatContainer} className="max-w-full flex-1 bg-white overflow-y-auto overflow-x-hidden space-y-4 pr-6 py-6">
+                <div
+                    ref={chatContainer}
+                    className="max-w-full flex-1 bg-white overflow-y-auto overflow-x-hidden space-y-4 pr-6 py-6"
+                >
                     {/* DISINI TEMPAT UNTUK MELAKUKAN CHAT, WEB SOCKET HARUS TERHUBUNG KE SINI */}
 
                     {messages.map((message, index) => {
-                        return message.name === currentUser ? <DummyChatSelf key={index} user={currentUser} msg={message.message} /> : <DummyChat key={index} user={message.name} msg={message.message} />;
+                        return message.name === currentUser ? (
+                            <DummyChatSelf
+                                key={index}
+                                user={currentUser}
+                                msg={message.message}
+                            />
+                        ) : (
+                            <DummyChat
+                                key={index}
+                                user={message.name}
+                                msg={message.message}
+                            />
+                        );
                     })}
                 </div>
                 <div className="w-full h-20 bg-secondary p-4 mb-3 space-y-1">
@@ -137,25 +166,37 @@ const ChatBox = () => {
                             <>
                                 <Textarea
                                     value={inputMessage}
-                                    onChange={(ev) => setInputMessage(ev.target.value)}
+                                    onChange={(ev) =>
+                                        setInputMessage(ev.target.value)
+                                    }
+                                    onKeyDown={handleKeyDown}
                                     className="flex-grow bg-white text-background placeholder:text-background placeholder-opacity-50 resize-none font-sans font-normal text-black"
                                     placeholder="Type your message here."
                                     id="message"
                                 />
-                                <Button onClick={handleSendButton} className="w-12 h-12 border bg-accent text-background ">
+                                <Button
+                                    onClick={handleSendButton}
+                                    className="w-12 h-12 border bg-accent text-background "
+                                >
                                     <Send className="w-6 h-6" />
                                 </Button>
                             </>
                         ) : (
                             <>
                                 <div className="w-full h-full flex items-center justify-center">
-                                    <p>Silakan isi nama dulu untuk mulai chat!</p>
+                                    <p>
+                                        Silakan isi nama dulu untuk mulai chat!
+                                    </p>
                                 </div>
                             </>
                         )}
                     </div>
 
-                    {openInput && <p className="text-sm text-center text-muted-foreground">Mohon untuk tetap sopan dalam berkomunikasi.</p>}
+                    {openInput && (
+                        <p className="text-sm text-center text-muted-foreground">
+                            Mohon untuk tetap sopan dalam berkomunikasi.
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
