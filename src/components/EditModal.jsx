@@ -51,19 +51,6 @@ export default function EditModal() {
             container.current.classList.replace("flex", "hidden");
         }
     }, [openModal]);
-
-    // useEffect(() => {
-    //     if (localName) {
-    //         container.current.classList.replace("flex", "hidden");
-    //         addNameStore(localName);
-    //     } else {
-    //         if (!nameStore) {
-    //             setOpen(false);
-    //         } else {
-    //             disableModal();
-    //         }
-    //     }
-    // }, [localName]);
     return (
         <div ref={container} className={`edit-modal absolute ease-in-out inset-0 z-10 flex items-center justify-center`}>
             <div className={`absolute inset-0 transition-all ${openModal ? "opacity-100 bg-background bg-opacity-50  backdrop-blur-md" : "opacity-0"}`}></div>
