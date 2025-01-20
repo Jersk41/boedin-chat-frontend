@@ -63,6 +63,10 @@ const ChatBox = () => {
 
         ws.onmessage = (event) => {
             const incomingMessage = JSON.parse(event.data);
+            if (incomingMessage.length > 49) {
+                incomingMessage.shift();
+            }
+
             incomingMessage.map((msg) =>
                 setMessages((prev) => [
                     ...prev,
