@@ -25,7 +25,7 @@ const DummyChatSelf = ({ user, msg }) => {
                     <path fill="#c1c5ff" d="M1.533,2.568L8,11.193V0L2.812,0C1.042,0,0.474,1.156,1.533,2.568z"></path>
                 </svg>
                 <p className="font-bold w-max text-black">{user}</p>
-                <div className={`w-max ${isLongText ? "max-w-full" : ""}`}>
+                <div className={`whitespace-pre-wrap w-max ${isLongText ? "max-w-full" : ""}`}>
                     <p className="font-normal text-black break-words">{msg}</p>
                 </div>
             </div>
