@@ -39,7 +39,11 @@ const ChatBox = () => {
     */
 
     const handleSendButton = () => {
-        if (!inputMessage) return;
+        if (!inputMessage) {
+            return;
+        } else if (inputMessage.trim() === "") {
+            return;
+        }
         if (!socket) return;
 
         const messageData = {
