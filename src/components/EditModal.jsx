@@ -24,8 +24,9 @@ export default function EditModal() {
 
     const handleName = (e) => {
         e.preventDefault();
-        localStorage.setItem("name", name);
-        addNameStore(name);
+        if(!name || name.trim() ==='') return;
+        localStorage.setItem("name", name.trim());
+        addNameStore(name.trim());
         closeModal();
     };
 
@@ -73,7 +74,7 @@ export default function EditModal() {
                         <p className="text-white">Preview nama kamu: {name}</p>
                     </CardContent>
                     <CardFooter className="gap-2">
-                        <Button type="submit" className="text-background bg-primary" size="sm" disabled={name === "" ? true : false} onClick={handleName}>
+                        <Button type="submit" className="text-background bg-primary" size="sm" disabled={!name || name.trim() === ""} onClick={handleName}>
                             Submit sekarang!
                         </Button>
 
