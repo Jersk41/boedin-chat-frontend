@@ -22,8 +22,9 @@ export default function UserModal() {
 
     const handleName = (e) => {
         e.preventDefault();
-        localStorage.setItem("name", name);
-        addNameStore(name);
+        if(!name || name.trim() ==='') return;
+        localStorage.setItem("name", name.trim());
+        addNameStore(name.trim());
         setOpen(false);
     };
 
@@ -62,7 +63,7 @@ export default function UserModal() {
                         </div>
                     </CardContent>
                     <CardFooter>
-                        <Button type="submit" size="sm" disabled={!name} onClick={handleName}>
+                        <Button type="submit" size="sm" disabled={!name || name.trim() === ''} onClick={handleName}>
                             Submit sekarang!
                         </Button>
                     </CardFooter>
