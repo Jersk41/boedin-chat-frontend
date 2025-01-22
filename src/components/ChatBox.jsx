@@ -201,7 +201,7 @@ content = content.replace(/<p><br><\/p>$/, ""); // Ini buat hilanging space koso
                         );
                     })}
                 </div>
-                <div className="w-full h-20 bg-primary p-4 mb-3 space-y-1">
+                <div className="w-full h-20 bg-primary p-4 mb-3 ">
                     <div className="w-full h-full flex flex-row space-x-2">
                         {openInput ? (
                             <>
@@ -241,12 +241,6 @@ content = content.replace(/<p><br><\/p>$/, ""); // Ini buat hilanging space koso
                             </>
                         )}
                     </div>
-
-                    {openInput && (
-                        <p className="text-sm text-center text-muted-foreground">
-                            Mohon untuk tetap sopan dalam berkomunikasi.
-                        </p>
-                    )}
                 </div>
             </div>
         </div>
