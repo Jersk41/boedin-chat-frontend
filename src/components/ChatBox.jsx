@@ -6,10 +6,13 @@ import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import useDataStore from "@/store/Store";
 import Hamburger from "./Hamburger";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 
 const ChatBox = () => {
     const [openInput, setOpenInput] = useState(false);
     const nameStore = useDataStore((state) => state.name);
+    const quillRef = useRef(null);
 
     const [messages, setMessages] = useState([]);
     const currentUser = nameStore;
@@ -38,33 +41,33 @@ const ChatBox = () => {
         End of backup code
     */
 
-    const handleSendButton = () => {
-        if (!inputMessage) {
-            return;
-        } else if (inputMessage.trim() === "") {
-            return;
-        }
-        if (!socket) return;
+  const handleSendButton = () => {
+    const editor = quillRef.current?.getEditor();
+    let content = editor?.root.innerHTML.trim(); // Ambil konten rich text sebagai HTML
 
-        const messageData = {
-            name: currentUser,
-            message: inputMessage,
-            time: new Date().toISOString(),
-        };
+    if (!content || content === "<p><br></p>") {
+        return; // Jangan kirim jika kosong atau hanya newline
+    }
+    content = content.replace(/<\/br>$/, ""); // Regex untuk replace hanya terakhir
 
-        socket.send(JSON.stringify([messageData]));
-        setInputMessage("");
+    const messageData = {
+        name: currentUser,
+        message: content,
+        time: new Date().toISOString(),
     };
+
+    if (socket) {
+        socket.send(JSON.stringify([messageData])); // Kirim pesan melalui WebSocket
+    }
+
+        editor.setContents([]); // Bersihkan editor (hapus konten)
+};
+
     const handleKeyDown = (e) => {
-        if (e.key === "Enter") {
-            if (e.shiftKey) {
-                return;
-            }
+        if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
-            if (inputMessage.trim()) {
-                handleSendButton();
-            }
-        }
+            handleSendButton();
+        } 
     };
 
     useEffect(() => {
@@ -83,16 +86,27 @@ const ChatBox = () => {
                 incomingMessage.shift();
             }
 
-            incomingMessage.map((msg) =>
-                setMessages((prev) => [
-                    ...prev,
-                    {
-                        name: msg.name,
-                        message: msg.message,
-                        time: msg.time,
-                    },
-                ])
-            );
+	incomingMessage.map((msg) =>
+	    setMessages((prev) => {
+		// Tambahkan pesan baru ke array
+		const newMessages = [
+		    ...prev,
+		    {
+		        name: msg.name,
+		        message: msg.message,
+		        time: msg.time,
+		    },
+		];
+		
+		// Jika jumlah pesan lebih dari 29, ambil hanya 29 pesan terakhir
+		if (newMessages.length > 29) {
+		    newMessages.shift(); // Hapus pesan pertama (terlama)
+		}
+
+		return newMessages;
+	    })
+	);
+
 
             // console.log(incomingMessage);
             // console.log(messages);
@@ -122,18 +136,41 @@ const ChatBox = () => {
         }
     }, [nameStore]);
 
+
     return (
-        <div className="container h-[80vh] px-4 md:px-0 bg-background flex flex-col md:flex-row rounded-xl overflow-hidden gap-6">
-            <div className="flex-[1] bg-secondary border-primary border-4 rounded-xl overflow-hidden"></div>
+        <div className="container h-[95vh] xl:h-[80vh] px-4 md:px-0 bg-background flex flex-col md:flex-row rounded-xl overflow-hidden gap-6">
+            <div className="flex-[1] bg-secondary border-4 rounded-xl overflow-hidden hidden xl:block ">
+                <img src="https://ik.imagekit.io/9hpbqscxd/SG/image-83.jpg?updatedAt=1705798245623" alt="" />
+                <div className="border-primary border-4 h-full">
+              <h1 className="font-bold text-center text-2xl mt-3 mb-1"> What's Up? {currentUser} </h1>
+              <h3 className="font-bold text-center text-xl mb-1"> Shortcut </h3>
+	 <ul className="list-inside list-disc pl-5 text-sm text-gray-600">
+	    <li><strong>Bold:</strong> <code>Ctrl + B</code></li>
+	    <li><strong>Italic:</strong> <code>Ctrl + I</code></li>
+	    <li><strong>Underline:</strong> <code>Ctrl + U</code></li>
+	    <li><strong>Bullet List:</strong> <code>Ctrl + Shift + 8</code></li>
+	    <li><strong>Numbered List:</strong> <code>Ctrl + Shift + 7</code></li>
+	    <li><strong>Insert Link:</strong> Use the toolbar</li>
+	  </ul>
+	  <h3 className="font-bold text-center text-xl mb-1 mt-3"> Rules </h3>
+	 <ul className="list-inside list-disc pl-5 text-sm text-gray-600">
+	    <li>Be respectful and kind to others.</li>
+	    <li>No spamming or excessive messages.</li>
+	    <li>Avoid offensive language.</li>
+	    <li>Keep the conversation on-topic.</li>
+	    <li>Do not share personal information.</li>
+ 	 </ul>
+ 	 </div>
+            </div>
             <div className="flex-[3] flex flex-col bg-secondary text-black overflow-hidden rounded-xl border-4 border-primary">
-                <div className="w-full h-20 bg-secondary flex items-center justify-between px-7 gap-4">
+                <div className="w-full h-20 bg-secondary flex items-center justify-between px-3 xl:px-7 gap-4">
                     <div className="flex items-center gap-4">
                         <div className="w-[50px] h-[50px] bg-yellow-500 rounded-full overflow-hidden">
                             <img src="/fp-square.jpeg" alt="" />
                         </div>
                         <div>
                             <h1 className="font-bold uppercase">IMPHNEN</h1>
-                            <p className="font-normal">
+                            <p className="font-normal hidden xl:block">
                                 Ingin Menjadi Programmer Handal, Namun Enggan
                                 Ngoding
                             </p>
@@ -168,7 +205,16 @@ const ChatBox = () => {
                     <div className="w-full h-full flex flex-row space-x-2">
                         {openInput ? (
                             <>
-                                <Textarea
+                                 <ReactQuill
+                                    ref={quillRef}
+				                            theme="snow"
+				                            id="message"
+				                            className="flex-grow bg-white text-background placeholder:text-background placeholder-opacity-50 resize-none font-sans font-normal text-black"
+				                            onKeyDown={handleKeyDown}
+				                            modules={{toolbar: false}}
+				                            placeholder="Type your message..."
+				                        />
+                                {/*<Textarea
                                     value={inputMessage}
                                     onChange={(ev) =>
                                         setInputMessage(ev.target.value)
@@ -177,7 +223,7 @@ const ChatBox = () => {
                                     className="flex-grow bg-white text-background placeholder:text-background placeholder-opacity-50 resize-none font-sans font-normal text-black"
                                     placeholder="Type your message here."
                                     id="message"
-                                />
+                                />*/}
                                 <Button
                                     onClick={handleSendButton}
                                     className="w-12 h-12 border bg-accent text-background "
