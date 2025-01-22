@@ -26,7 +26,7 @@ const DummyChat = ({ user, msg }) => {
                 </svg>
                 <p className="font-bold w-max text-black">{user}</p>
                 <div className={`whitespace-pre-wrap w-max ${isLongText ? "max-w-full" : ""}`}>
-                    <p className="font-normal text-black break-words">{msg}</p>
+                    <div className="text-black break-words" dangerouslySetInnerHTML={{__html: msg || ""}} />
                 </div>
             </div>
         </div>
