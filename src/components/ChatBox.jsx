@@ -48,7 +48,7 @@ const ChatBox = () => {
     if (!content || content === "<p><br></p>") {
         return; // Jangan kirim jika kosong atau hanya newline
     }
-    content = content.replace(/<\/br>$/, ""); // Regex untuk replace hanya terakhir
+content = content.replace(/<p><br><\/p>$/, ""); // Ini buat hilanging space kosong di message
 
     const messageData = {
         name: currentUser,
@@ -139,10 +139,10 @@ const ChatBox = () => {
 
     return (
         <div className="container h-[95vh] xl:h-[80vh] px-4 md:px-0 bg-background flex flex-col md:flex-row rounded-xl overflow-hidden gap-6">
-            <div className="flex-[1] bg-secondary border-4 rounded-xl overflow-hidden hidden xl:block ">
+            <div className="flex-[1] border-primary border-4 bg-primary text-white rounded-xl overflow-hidden hidden xl:block ">
                 <img src="https://ik.imagekit.io/9hpbqscxd/SG/image-83.jpg?updatedAt=1705798245623" alt="" />
-                <div className="border-primary border-4 h-full">
-              <h1 className="font-bold text-center text-2xl mt-3 mb-1"> What's Up? {currentUser} </h1>
+                <div>
+              <h1 className="font-bold text-center text-2xl mt-3 mb-1"> Eyyoo <span className="text-success">{currentUser}</span> </h1>
               <h3 className="font-bold text-center text-xl mb-1"> Shortcut </h3>
 	 <ul className="list-inside list-disc pl-5 text-sm text-gray-600">
 	    <li><strong>Bold:</strong> <code>Ctrl + B</code></li>
@@ -162,8 +162,8 @@ const ChatBox = () => {
  	 </ul>
  	 </div>
             </div>
-            <div className="flex-[3] flex flex-col bg-secondary text-black overflow-hidden rounded-xl border-4 border-primary">
-                <div className="w-full h-20 bg-secondary flex items-center justify-between px-3 xl:px-7 gap-4">
+            <div className="flex-[3] flex flex-col bg-primary text-white overflow-hidden rounded-xl border-4 border-primary">
+                <div className="w-full h-20 bg-primary flex items-center justify-between px-3 xl:px-7 gap-4">
                     <div className="flex items-center gap-4">
                         <div className="w-[50px] h-[50px] bg-yellow-500 rounded-full overflow-hidden">
                             <img src="/fp-square.jpeg" alt="" />
@@ -181,7 +181,7 @@ const ChatBox = () => {
 
                 <div
                     ref={chatContainer}
-                    className="max-w-full flex-1 bg-white overflow-y-auto overflow-x-hidden space-y-4 pr-6 py-6"
+                    className="max-w-full flex-1 bg-background overflow-y-auto overflow-x-hidden space-y-4 pr-6 py-6"
                 >
                     {/* DISINI TEMPAT UNTUK MELAKUKAN CHAT, WEB SOCKET HARUS TERHUBUNG KE SINI */}
 
@@ -201,7 +201,7 @@ const ChatBox = () => {
                         );
                     })}
                 </div>
-                <div className="w-full h-20 bg-secondary p-4 mb-3 space-y-1">
+                <div className="w-full h-20 bg-primary p-4 mb-3 space-y-1">
                     <div className="w-full h-full flex flex-row space-x-2">
                         {openInput ? (
                             <>
@@ -209,7 +209,7 @@ const ChatBox = () => {
                                     ref={quillRef}
 				                            theme="snow"
 				                            id="message"
-				                            className="flex-grow bg-white text-background placeholder:text-background placeholder-opacity-50 resize-none font-sans font-normal text-black"
+				                            className="flex-grow bg-accent text-white border-none border-accent placeholder:text-white placeholder-opacity-50 resize-none font-sans font-normal"
 				                            onKeyDown={handleKeyDown}
 				                            modules={{toolbar: false}}
 				                            placeholder="Type your message..."
@@ -226,7 +226,7 @@ const ChatBox = () => {
                                 />*/}
                                 <Button
                                     onClick={handleSendButton}
-                                    className="w-12 h-12 border bg-accent text-background "
+                                    className="w-12 h-12 border bg-accent text-white border-accent"
                                 >
                                     <Send className="w-6 h-6" />
                                 </Button>
