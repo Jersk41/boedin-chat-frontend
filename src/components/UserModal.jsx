@@ -63,8 +63,8 @@ export default function UserModal() {
                         </div>
                     </CardContent>
                     <CardFooter>
-                        <Button type="submit" size="sm" disabled={!name || name.trim() === ''} onClick={handleName}>
-                            Submit sekarang!
+                        <Button className="bg-success text-background" type="submit" size="sm" disabled={!name || name.trim() === ''} onClick={handleName}>
+                            Chatting
                         </Button>
                     </CardFooter>
                 </form>

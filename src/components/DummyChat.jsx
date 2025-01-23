@@ -5,7 +5,7 @@ const DummyChat = ({ user, msg }) => {
     const message = msg;
 
     const detectText = () => {
-        if (message.length > 30) {
+        if (message.length > 50) {
             setIsLongText(true);
         } else {
             setIsLongText(false);
@@ -26,7 +26,7 @@ const DummyChat = ({ user, msg }) => {
                 </svg>
                 <p className="font-bold w-max text-destructive">{user}</p>
                 <div className={`whitespace-pre-wrap w-max ${isLongText ? "max-w-full" : ""}`}>
-                    <div className="text-black break-words" dangerouslySetInnerHTML={{__html: msg || ""}} />
+                    <div className="text-black break-words chat" dangerouslySetInnerHTML={{__html: msg || ""}} />
                 </div>
             </div>
         </div>

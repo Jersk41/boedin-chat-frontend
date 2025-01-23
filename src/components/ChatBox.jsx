@@ -192,7 +192,7 @@ const ChatBox = () => {
             </div>
             <div>
               <h1 className="font-bold uppercase">IMPHNEN</h1>
-              <p className="font-normal truncate w-[300px] md:w-full">
+              <p className="font-normal truncate hidden md:block">
                 Ingin Menjadi Programmer Handal, Namun Enggan Ngoding
               </p>
             </div>
@@ -236,7 +236,7 @@ const ChatBox = () => {
                   ref={quillRef}
                   theme="snow"
                   id="message"
-                  className="flex-grow bg-accent text-white rounded-md border-none border-accent placeholder:text-white placeholder-opacity-50 resize-none font-sans font-normal"
+                  className="flex-grow bg-accent max-w-full text-white rounded-md border-none border-accent placeholder:text-white placeholder-opacity-50 resize-none font-sans font-normal"
                   onKeyDown={handleKeyDown}
                   modules={{ toolbar: false }}
                   placeholder="Type your message..."
