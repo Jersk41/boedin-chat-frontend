@@ -9,7 +9,7 @@ export default {
          'secondary': '#D9EAFD',
          'accent': '#606470',
          'success': "#50D890",
-            destructive: "#ff3f3f",
+            destructive: "#FD8A8A",
             white: "#fdfafa",
         },
 

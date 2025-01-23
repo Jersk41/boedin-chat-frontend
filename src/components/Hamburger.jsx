@@ -15,7 +15,7 @@ export default function Hamburger() {
     };
 
     return (
-        <div className="relative">
+        <div className="relative flex-shrink-0">
             <button className=" w-[40px] h-[40px]  flex items-center justify-center rounded-full transition-all hover:bg-white/50" onClick={handleToggle}>
                 <EllipsisVertical />
             </button>

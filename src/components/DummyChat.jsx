@@ -17,7 +17,7 @@ const DummyChat = ({ user, msg }) => {
     }, [message]);
 
     return (
-        <div className=" px-6">
+        <div className="px-6">
             <div className={`relative ${isLongText ? "max-w-full" : "w-max"} min-h-4 min-w-32 bg-primary p-4 rounded-md`}>
                 <svg className="absolute top-0 -left-4 w-[20px]" viewBox="0 0 8 13" preserveAspectRatio="xMidYMid meet" version="1.1" x="0px" y="0px">
                     <title>tail-in</title>
