@@ -69,20 +69,20 @@
     }
 } */
 /* Scrollbar customization for modern browsers */
-.chat-container::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 8px; /* Lebar scrollbar */
 }
 
-.chat-container::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #50D890; /* Warna hitam */
   border-radius: 4px; /* Membuat scrollbar lebih bulat */
 }
 
-.chat-container::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background: #ff3f3f; /* Warna ketika di-hover */
 }
 
-.chat-container::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent; /* Warna background track */
 }
 
@@ -100,6 +100,25 @@
 .ql-container {
     border: none !important;
 }
+.quill {
+    max-width: 100% !important;
+    overflow-x: hidden;
+}
 .ql-editor {
         border-radius: 30% !important;
+}
+.ql-editor::-webkit-scrollbar {
+  width: 2px; /* Lebar scrollbar */
+}
+
+.ql-editor > p {
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+}
+
+img {
+    border-radius: 1%;
+}
+p > img {
+    margin-top: 1% !important;
 }

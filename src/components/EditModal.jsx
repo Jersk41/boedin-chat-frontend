@@ -69,13 +69,13 @@ export default function EditModal() {
                                     *
                                 </span>
                             </Label>
-                            <Input id="name" name="name" placeholder="Fathin" className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive border-white text-white" onChange={(e) => setName(e.target.value)} required />
+                            <Input id="name" name="name" placeholder="Fathin" className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive border-accent text-white" onChange={(e) => setName(e.target.value)} required />
                         </div>
                         <p className="text-white">Preview nama kamu: {name}</p>
                     </CardContent>
                     <CardFooter className="gap-2">
-                        <Button type="submit" className="text-background bg-primary" size="sm" disabled={!name || name.trim() === ""} onClick={handleName}>
-                            Submit sekarang!
+                        <Button type="submit" className="text-white bg-accent" size="sm" disabled={!name || name.trim() === ""} onClick={handleName}>
+                            Ganti
                         </Button>
 
                         <Button type="submit" className="bg-destructive text-white" size="sm" disabled={false} onClick={resetName}>
