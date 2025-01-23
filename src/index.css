@@ -68,3 +68,38 @@
         @apply bg-background text-foreground;
     }
 } */
+/* Scrollbar customization for modern browsers */
+.chat-container::-webkit-scrollbar {
+  width: 8px; /* Lebar scrollbar */
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: #50D890; /* Warna hitam */
+  border-radius: 4px; /* Membuat scrollbar lebih bulat */
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+  background: #ff3f3f; /* Warna ketika di-hover */
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: transparent; /* Warna background track */
+}
+
+/* Optional: Style for Firefox */
+.chat-container {
+  scrollbar-width: thin; /* Membuat scrollbar lebih kecil */
+  scrollbar-color: #50D890 transparent; /* Thumb warna hitam, track transparan */
+}
+.ql-editor.ql-blank::before {
+    color: #F7F5FE !important;
+    opacity: 50%;
+    font-weight: bold;
+    font-style: normal !important;
+}
+.ql-container {
+    border: none !important;
+}
+.ql-editor {
+        border-radius: 30% !important;
+}

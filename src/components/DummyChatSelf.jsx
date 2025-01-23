@@ -18,7 +18,7 @@ const DummyChatSelf = ({ user, msg }) => {
 
     return (
         <div className="flex justify-end px-6">
-            <div className={`relative ${isLongText ? "max-w-full" : "w-max"} min-h-4 bg-accent min-w-32 p-4 rounded-md`}>
+            <div className={`relative ${isLongText ? "max-w-full" : "w-max"} min-h-4 bg-accent min-w-32 py-2 px-3 rounded-md`}>
                 <svg className="absolute [transform:rotateY(3.124rad)] top-0 -right-4 w-[20px]" viewBox="0 0 8 13" preserveAspectRatio="xMidYMid meet" version="1.1" x="0px" y="0px">
                     <title>tail-in</title>
                     <path opacity="0.13" fill="#606470" d="M1.533,3.568L8,12.193V1H2.812 C1.042,1,0.474,2.156,1.533,3.568z"></path>
