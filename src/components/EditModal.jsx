@@ -69,12 +69,22 @@ export default function EditModal() {
                                     *
                                 </span>
                             </Label>
-                            <Input id="name" name="name" placeholder="Fathin" className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive border-accent text-white" onChange={(e) => setName(e.target.value)} required />
+                            <Input 
+                                id="name" 
+                                name="name" 
+                                placeholder={localName} 
+                                className="peer group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive border-accent text-white" 
+                                onChange={(e) => setName(e.target.value)}
+                                min={5} 
+                                max={21} 
+                                required
+                                 />
+                            {!(name.trim().length > 5 && name.trim().length <= 21) ? <p className="text-destructive invinsible peer-invalid:visible">Username harus memiliki panjang 6-21 karakter saja</p> : ""}
                         </div>
                         <p className="text-white">Preview nama kamu: {name}</p>
                     </CardContent>
                     <CardFooter className="gap-2">
-                        <Button type="submit" className="text-white bg-accent" size="sm" disabled={!name || name.trim() === ""} onClick={handleName}>
+                        <Button type="submit" className="text-white bg-accent" size="sm" disabled={!name || name.trim() === "" || !(name.trim().length > 5 && name.trim().length <= 21)} onClick={handleName}>
                             Ganti
                         </Button>
 
