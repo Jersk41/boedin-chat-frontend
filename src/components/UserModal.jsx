@@ -23,6 +23,7 @@ export default function UserModal() {
     const handleName = (e) => {
         e.preventDefault();
         if(!name || name.trim() ==='') return;
+        if (name.length < 5 && name.length > 21) return; 
         localStorage.setItem("name", name.trim());
         addNameStore(name.trim());
         setOpen(false);
@@ -55,11 +56,14 @@ export default function UserModal() {
                                 id="name"
                                 name="name"
                                 placeholder="Fathin"
-                                className="border-white text-white"
+                                className="peer border-white text-white"
                                 onChange={(e) => setName(e.target.value)}
                                 value={name}
+                                min={5}
+                                max={21}
                                 aria-errormessage="error-name"
                             />
+                            {!(name.trim().length > 5 && name.trim().length <= 21) ? <p className="text-destructive invinsible peer-invalid:visible">Username harus memiliki panjang 6-21 karakter saja</p> : ""}
                         </div>
                     </CardContent>
                     <CardFooter>
