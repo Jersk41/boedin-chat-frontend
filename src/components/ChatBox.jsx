@@ -21,28 +21,6 @@ const ChatBox = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [socket, setSocket] = useState(null);
 
-  /*
-        Kode di bawah hanya bersifat backup,
-        jika websocket sedang maintenance.
-    */
-
-  // const handleSendButton = () => {
-  //     // console.log("Pesan ada di component chat input", inputMessage);
-  //     setMessages((prev) => [
-  //         ...prev,
-  //         {
-  //             name: currentUser,
-  //             message: inputMessage,
-  //             time: new Date().toISOString(),
-  //         },
-  //     ]);
-  //     setInputMessage("");
-  // };
-
-  /*
-        End of backup code
-    */
-
   const handleSendButton = () => {
       const editor = quillRef.current?.getEditor();
       let content = editor?.root.innerHTML.trim(); // Ambil konten rich text sebagai HTML
