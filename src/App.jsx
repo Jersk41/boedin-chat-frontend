@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import ChatBox from "./components/ChatBox";
 
-import Usermodal from "./components/UserModal";
+// import Usermodal from "./components/UserModal";
 import EditModal from "./components/EditModal";
 
 export default function App() {

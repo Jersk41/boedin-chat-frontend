@@ -4,19 +4,16 @@ import useDataStore from "@/store/Store";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 // import { contactFormAction } from '@/lib/actions'
-import { Check } from "lucide-react";
 
 export default function UserModal() {
     const container = useRef(null);
     const [open, setOpen] = useState(false);
     const [name, setName] = useState("");
 
-    const nameStore = useDataStore((state) => state.name);
     const addNameStore = useDataStore((state) => state.setName);
     const localName = localStorage.getItem("name");
 
