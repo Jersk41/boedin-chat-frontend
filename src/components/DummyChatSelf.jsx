@@ -4,9 +4,17 @@ const DummyChatSelf = ({ user, msg, messageBefore }) => {
     const [isLongText, setIsLongText] = useState(false);
     const [message, setMessages] = useState(msg);
 
+    const generateFlexibleRegex = (word) => {
+        return word
+            .split("")
+            .map((char, index) => (index === 0 || index === word.length - 1 ? char : `[a-z]*`))
+            .join("");
+    };
+
     const replaceBadword = (text) => {
-        const badword = ["kontol", "anjing", "bangsat", "peler"];
-        const regex = new RegExp(`\\b(${badword.map((word) => word.split("").join("+")).join("|")})\\w*\\b`, "gi");
+        // tambah sendiri banh :v
+        const badword = ["anjing", "kontol"];
+        const regex = new RegExp(`\\b(${badword.map(generateFlexibleRegex).join("|")})\\b`, "gi");
 
         return text.replace(regex, (match) => {
             return match[0] + "*".repeat(match.length - 2) + match[match.length - 1];
