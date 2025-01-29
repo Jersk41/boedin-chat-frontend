@@ -2,7 +2,24 @@ import { useState, useEffect, useRef } from "react";
 
 const DummyChatSelf = ({ name, content, messageBefore }) => {
     const [isLongText, setIsLongText] = useState(false);
-    const message = useRef(content);
+    const [message, setMessages] = useState(msg);
+
+    const generateFlexibleRegex = (word) => {
+        return word
+            .split("")
+            .map((char, index) => (index === 0 || index === word.length - 1 ? char : `[a-z]*`))
+            .join("");
+    };
+
+    const replaceBadword = (text) => {
+        // tambah sendiri banh :v
+        const badword = ["anjing", "kontol"];
+        const regex = new RegExp(`\\b(${badword.map(generateFlexibleRegex).join("|")})\\b`, "gi");
+
+        return text.replace(regex, (match) => {
+            return match[0] + "*".repeat(match.length - 2) + match[match.length - 1];
+        });
+    };
 
     const detectText = () => {
         if (message.current.length > 100) {
@@ -13,8 +30,10 @@ const DummyChatSelf = ({ name, content, messageBefore }) => {
     };
 
     useEffect(() => {
+        const sanitizedMessage = replaceBadword(msg);
+        setMessages(sanitizedMessage);
         detectText();
-    }, [message]);
+    }, [msg]);
 
     const shouldDisplayName = !messageBefore || messageBefore.name !== name;
 
