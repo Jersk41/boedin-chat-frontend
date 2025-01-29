@@ -1,39 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import chatUtils from "@/lib/chatUtils";
+import { useState, useEffect } from "react";
 
 const DummyChatSelf = ({ name, content, messageBefore }) => {
     const [isLongText, setIsLongText] = useState(false);
-    const [message, setMessages] = useState(msg);
-
-    const generateFlexibleRegex = (word) => {
-        return word
-            .split("")
-            .map((char, index) => (index === 0 || index === word.length - 1 ? char : `[a-z]*`))
-            .join("");
-    };
-
-    const replaceBadword = (text) => {
-        // tambah sendiri banh :v
-        const badword = ["anjing", "kontol"];
-        const regex = new RegExp(`\\b(${badword.map(generateFlexibleRegex).join("|")})\\b`, "gi");
-
-        return text.replace(regex, (match) => {
-            return match[0] + "*".repeat(match.length - 2) + match[match.length - 1];
-        });
-    };
-
-    const detectText = () => {
-        if (message.current.length > 100) {
-            setIsLongText(true);
-        } else {
-            setIsLongText(false);
-        }
-    };
+    const [message, setMessages] = useState(content);
 
     useEffect(() => {
-        const sanitizedMessage = replaceBadword(msg);
-        setMessages(sanitizedMessage);
-        detectText();
-    }, [msg]);
+        const filteredContent = chatUtils.badWords.filter(message);
+        setMessages(filteredContent);
+        setIsLongText(chatUtils.detectTextIsLong(message));
+    }, [message]);
 
     const shouldDisplayName = !messageBefore || messageBefore.name !== name;
 
@@ -51,7 +27,7 @@ const DummyChatSelf = ({ name, content, messageBefore }) => {
                 </>
                 )}                
                 <div className={`whitespace-pre-wrap w-max ${isLongText ? "max-w-full" : ""}`}>
-                    <div className="text-black break-words chat" dangerouslySetInnerHTML={{__html: content || ""}} />
+                    <div className="text-black break-words chat" dangerouslySetInnerHTML={{__html: message || ""}} />
                 </div>
             </div>
         </div>

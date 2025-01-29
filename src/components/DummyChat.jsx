@@ -1,19 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import chatUtils from "@/lib/chatUtils";
+import { useState, useEffect } from "react";
 
 const DummyChat = ({ name, content, messageBefore }) => {
     const [isLongText, setIsLongText] = useState(false);
-    const message = useRef(content);
-
-    const detectText = () => {
-        if (message.current.length > 100) {
-            setIsLongText(true);
-        } else {
-            setIsLongText(false);
-        }
-    };
+    const [message, setMessages] = useState(content);
 
     useEffect(() => {
-        detectText();
+        const filteredContent = chatUtils.badWords.filter(message);
+        setMessages(filteredContent);
+        setIsLongText(chatUtils.detectTextIsLong(message));
     }, [message]);
 
     const shouldDisplayName = !messageBefore || messageBefore.name !== name;
@@ -32,7 +27,7 @@ const DummyChat = ({ name, content, messageBefore }) => {
                 </>
                 )}
                 <div className={`whitespace-pre-wrap w-max ${isLongText ? "max-w-full" : ""}`}>
-                    <div className="text-black break-words chat" dangerouslySetInnerHTML={{ __html: content || "" }} />
+                    <div className="text-black break-words chat" dangerouslySetInnerHTML={{ __html: message || "" }} />
                 </div>
             </div>
         </div>
