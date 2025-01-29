@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { EllipsisVertical } from "lucide-react";
 
 import useDataStore from "@/store/Store";
+import { NavLink } from "react-router";
 export default function Hamburger() {
+    // const navigate = useNavigate();
     const setOpenModal = useDataStore((state) => state.setOpenModal);
+    // const logout = useDataStore((state) => state.logout);
+
     const [open, setOpen] = useState(false);
     const handleClick = () => {
         setOpen(!open);
@@ -27,6 +31,9 @@ export default function Hamburger() {
                 <a href="https://discord.gg/imphnen" className="block w-full px-5 py-2 text-nowrap text-md text-white transition-all hover:bg-white hover:text-background">
                     Join Discord!
                 </a>
+                <NavLink to="/logout" className="block w-full px-5 py-2 text-nowrap text-md text-center text-destructive transition-all hover:bg-destructive hover:text-background" replace >
+                    Logout
+                </NavLink>
             </div>
         </div>
     );

@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const DummyChatSelf = ({ user, msg, messageBefore }) => {
+const DummyChatSelf = ({ name, content, messageBefore }) => {
     const [isLongText, setIsLongText] = useState(false);
-    const message = msg;
+    const message = useRef(content);
 
     const detectText = () => {
-        if (message.length > 100) {
+        if (message.current.length > 100) {
             setIsLongText(true);
         } else {
             setIsLongText(false);
@@ -16,7 +16,7 @@ const DummyChatSelf = ({ user, msg, messageBefore }) => {
         detectText();
     }, [message]);
 
-    const shouldDisplayName = !messageBefore || messageBefore.name !== user;
+    const shouldDisplayName = !messageBefore || messageBefore.name !== name;
 
     return (
         <div className={`flex justify-end px-6 ${shouldDisplayName ? "mt-2" : "mt-1"}`}>
@@ -28,11 +28,11 @@ const DummyChatSelf = ({ user, msg, messageBefore }) => {
                         <path opacity="0.13" fill="#606470" d="M1.533,3.568L8,12.193V1H2.812 C1.042,1,0.474,2.156,1.533,3.568z"></path>
                         <path fill="#606470" d="M1.533,2.568L8,11.193V0L2.812,0C1.042,0,0.474,1.156,1.533,2.568z"></path>
                     </svg>
-                    <p className="font-bold w-max text-success">{user}</p>
+                    <p className="font-bold w-max text-success">{name}</p>
                 </>
                 )}                
-                <div className={`whitespace-pre-wrap w-max max-w-full`}>
-                    <div className="text-black break-words chat" dangerouslySetInnerHTML={{__html: msg || ""}} />
+                <div className={`whitespace-pre-wrap w-max ${isLongText ? "max-w-full" : ""}`}>
+                    <div className="text-black break-words chat" dangerouslySetInnerHTML={{__html: content || ""}} />
                 </div>
             </div>
         </div>
