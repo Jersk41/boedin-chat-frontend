@@ -24,7 +24,7 @@ export default function EditModal() {
 
     const handleName = (e) => {
         e.preventDefault();
-        if(!name || name.trim() ==='') return;
+        if (!name || name.trim() === "") return;
         setUser({name: name.trim(), role: user?.role || 'test'})
         localStorage.setItem("name", name.trim());
         addNameStore(name.trim());
@@ -46,7 +46,7 @@ export default function EditModal() {
     };
 
     useEffect(() => {
-        console.log(openModal);
+        // console.log(openModal);
         if (openModal) {
             container.current.classList.replace("hidden", "flex");
         } else {
@@ -70,16 +70,16 @@ export default function EditModal() {
                                     *
                                 </span>
                             </Label>
-                            <Input 
-                                id="name" 
-                                name="name" 
-                                placeholder={localName} 
-                                className="peer group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive border-accent text-white" 
+                            <Input
+                                id="name"
+                                name="name"
+                                placeholder={localName}
+                                className="peer group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive border-accent text-white"
                                 onChange={(e) => setName(e.target.value)}
-                                min={5} 
-                                max={21} 
+                                min={5}
+                                max={21}
                                 required
-                                 />
+                            />
                             {!(name.trim().length > 5 && name.trim().length <= 21) ? <p className="text-destructive invinsible peer-invalid:visible">Username harus memiliki panjang 6-21 karakter saja</p> : ""}
                         </div>
                         <p className="text-white">Preview nama kamu: {name}</p>

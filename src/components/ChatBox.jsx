@@ -5,30 +5,54 @@ import { Button } from "./ui/button";
 import { Send, ChevronLeft, ChevronRight } from "lucide-react";
 import useDataStore from "@/store/Store";
 import Hamburger from "./Hamburger";
-import ReactQuill from "react-quill";
+import ReactQuill from "react-quill-new";
 import "react-quill/dist/quill.snow.css";
 import { WEBSOCKET_URI } from "@/config/constants";
+// import "react-quill-new/dist/quill.snow.css";
+// import ReactQuill from "react-quill";
 
 const ChatBox = () => {
-	const [openInput, setOpenInput] = useState(false);
-	// const nameStore = useDataStore((state) => state.name);
+  	const [openInput, setOpenInput] = useState(false);
+  	// const nameStore = useDataStore((state) => state.name);
 	// const syncUser = useDataStore((state) => state.syncUser);
 	// // const [currentUser, setCurrentUser] = useState(null);
 	// const isAuthenticated = useDataStore((state) => state.isAuthenticated);
 	const user = useDataStore((state) => state.user);
-	const quillRef = useRef(null);
-	const [sidebarVisible, setSidebarVisible] = useState(true); // State untuk sidebar
+  	const quillRef = useRef(null);
+  	const [sidebarVisible, setSidebarVisible] = useState(true); // State untuk sidebar
 
-	const [messages, setMessages] = useState([]);
+  	const [messages, setMessages] = useState([]);
 
-	// const currentUser = nameStore || user?.name || localStorage.getItem('name');
-	const [inputMessage, setInputMessage] = useState("");
+  	// const currentUser = nameStore || user?.name || localStorage.getItem('name');
+  	const [inputMessage, setInputMessage] = useState("");
 
-	const [socket, setSocket] = useState(null);
+  	const [socket, setSocket] = useState(null);
 
-	const handleSendButton = () => {
-		const editor = quillRef.current?.getEditor();
-		let content = editor?.root.innerHTML.trim(); // Ambil konten rich text sebagai HTML
+    /*
+        Kode di bawah hanya bersifat backup,
+        jika websocket sedang maintenance.
+    */
+
+    // const handleSendButton = () => {
+    //     // console.log("Pesan ada di component chat input", inputMessage);
+    //     setMessages((prev) => [
+    //         ...prev,
+    //         {
+    //             name: currentUser,
+    //             message: inputMessage,
+    //             time: new Date().toISOString(),
+    //         },
+    //     ]);
+    //     setInputMessage("");
+    // };
+
+    /*
+        End of backup code
+    */
+
+    const handleSendButton = () => {
+        const editor = quillRef.current?.getEditor();
+        let content = editor?.root.innerHTML.trim(); // Ambil konten rich text sebagai HTML
 
 		// Simpan tag <img> dalam array dan ganti sementara dengan placeholder
 		const images = [];
@@ -37,23 +61,21 @@ const ChatBox = () => {
 			return `[[IMG-${images.length - 1}]]`; // Gantikan <img> dengan placeholder
 		});
 
-		// Hapus semua tag HTML lain (kecuali <img>)
-		let contentWithoutHTML = contentWithImages.replace(/<\/?[^>]+(>|$)/g, "");
+  		// Hapus semua tag HTML lain (kecuali <img>)
+  		let contentWithoutHTML = contentWithImages.replace(/<\/?[^>]+(>|$)/g, "");
 
-		// Jika hanya ada spasi atau newline, jangan lanjutkan
-		if (!contentWithoutHTML || contentWithoutHTML.trim().length === 0) {
-			return; // Jangan kirim jika kosong atau hanya newline
-		}
+  		// Jika hanya ada spasi atau newline, jangan lanjutkan
+  		if (!contentWithoutHTML || contentWithoutHTML.trim().length === 0) {
+    			return; // Jangan kirim jika kosong atau hanya newline
+  		}
 
-		// Hapus elemen <p><br></p> dan <span class="ql-cursor">
-		content = contentWithImages
-			.replace(/<p><br><\/p>$/, "")
-			.replace('<span class="ql-cursor">﻿</span>', ""); // Hapus elemen kursor kosong
+        // Hapus elemen <p><br></p> dan <span class="ql-cursor">
+        content = contentWithImages.replace(/<p><br><\/p>$/, "").replace('<span class="ql-cursor">﻿</span>', ""); // Hapus elemen kursor kosong
 
-		// Kembalikan tag <img> ke posisi semula
-		content = content.replace(/\[\[IMG-(\d+)\]\]/g, (match, index) => {
-			return images[index]; // Kembalikan tag <img> ke posisi semula
-		});
+        // Kembalikan tag <img> ke posisi semula
+        content = content.replace(/\[\[IMG-(\d+)\]\]/g, (match, index) => {
+            return images[index]; // Kembalikan tag <img> ke posisi semula
+        });
 
 		try {
 			// Persiapkan data pesan
@@ -112,7 +134,7 @@ const ChatBox = () => {
 		return () => ws.close();
 	}, []);
 
-	const chatContainer = useRef();
+  	const chatContainer = useRef();
 
 	useEffect(() => {
 		if (chatContainer.current) {
@@ -139,13 +161,10 @@ const ChatBox = () => {
 			.replace(/<p><br><\/p>$/, "")
 			.replace('<span class="ql-cursor">﻿</span>', "");
 
-		// Mengembalikan tag <img> ke posisi aslinya
-		processedContent = processedContent.replace(
-			/\[\[IMG-(\d+)\]\]/g,
-			(match, index) => {
-				return images[index]; // Kembalikan tag <img> ke posisi semula
-			}
-		);
+        // Mengembalikan tag <img> ke posisi aslinya
+        processedContent = processedContent.replace(/\[\[IMG-(\d+)\]\]/g, (match, index) => {
+            return images[index]; // Kembalikan tag <img> ke posisi semula
+        });
 
 		setInputMessage(processedContent);
 	};	
@@ -218,11 +237,8 @@ const ChatBox = () => {
 					<Hamburger />
 				</div>
 
-				<div
-					ref={chatContainer}
-					className="max-w-full relative z-5 chat-container flex-1 bg-gradient-to-r from-background to-primary overflow-y-auto overflow-x-hidden pr-6 py-6"
-				>
-					{/* DISINI TEMPAT UNTUK MELAKUKAN CHAT, WEB SOCKET HARUS TERHUBUNG KE SINI */}
+                <div ref={chatContainer} className="max-w-full relative z-5 chat-container flex-1 bg-gradient-to-r from-background to-primary overflow-y-auto overflow-x-hidden pr-6 py-6">
+                    {/* DISINI TEMPAT UNTUK MELAKUKAN CHAT, WEB SOCKET HARUS TERHUBUNG KE SINI */}
 
 					{messages.map((message, index) => {
 						const messageBefore = index > 0 ? messages[index - 1] : null;
